@@ -1,4 +1,6 @@
 const { nanoid } = require('nanoid');
+const InvariantError = require('../../exceptions/InvariantError');
+const NotFoundError = require('../../exceptions/NotFoundError');
 
 class BooksService {
   constructor() {
@@ -36,11 +38,11 @@ class BooksService {
     };
 
     if (name === undefined) {
-      throw new Error('Gagal menambahkan buku. Mohon isi nama buku');
+      throw new InvariantError('Gagal menambahkan buku. Mohon isi nama buku');
     }
 
     if (readPage > pageCount) {
-      throw new Error('Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount');
+      throw new InvariantError('Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount');
     }
 
     this.books.push(newBook);
@@ -48,7 +50,7 @@ class BooksService {
     const isSuccess = this.books.filter((book) => book.id === id).length > 0;
 
     if (!isSuccess) {
-      throw new Error('Buku gagal ditambahkan');
+      throw new NotFoundError('Buku gagal ditambahkan');
     }
     return id;
   }
@@ -80,7 +82,7 @@ class BooksService {
   getBookById(id) {
     const book = this.books.filter((n) => n.id === id)[0];
     if (!book) {
-      throw new Error('Buku tidak ditemukan');
+      throw new NotFoundError('Buku tidak ditemukan');
     }
     return book;
   }
@@ -99,17 +101,17 @@ class BooksService {
     },
   ) {
     if (name === undefined) {
-      throw new Error('Gagal memperbarui buku. Mohon isi nama buku');
+      throw new InvariantError('Gagal memperbarui buku. Mohon isi nama buku');
     }
 
     if (readPage > pageCount) {
-      throw new Error('Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount');
+      throw new InvariantError('Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount');
     }
 
     const index = this.books.findIndex((book) => book.id === id);
 
     if (index === -1) {
-      throw new Error('Gagal memperbarui buku. Id tidak ditemukan');
+      throw new NotFoundError('Gagal memperbarui buku. Id tidak ditemukan');
     }
 
     const updatedAt = new Date().toISOString();
@@ -132,7 +134,7 @@ class BooksService {
     const index = this.books.findIndex((book) => book.id === id);
 
     if (index === -1) {
-      throw new Error('Buku gagal dihapus. Id tidak ditemukan');
+      throw new NotFoundError('Buku gagal dihapus. Id tidak ditemukan');
     }
 
     this.books.splice(index, 1);

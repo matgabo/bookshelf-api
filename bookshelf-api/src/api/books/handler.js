@@ -1,3 +1,5 @@
+const ClientError = require('../../exceptions/ClientError');
+
 class BooksHandler {
   constructor(service) {
     this.service = service;
@@ -45,11 +47,19 @@ class BooksHandler {
       response.code(201);
       return response;
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Mohon maaf, terjadi kegagalan pada server kami',
       });
-      response.code(400);
+      response.code(500);
       return response;
     }
   }
@@ -75,11 +85,19 @@ class BooksHandler {
         },
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Mohon maaf, terjadi kegagalan pada server kami',
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
@@ -95,11 +113,19 @@ class BooksHandler {
         message: 'Buku berhasil diperbarui',
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Mohon maaf, terjadi kegagalan pada server kami',
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
@@ -113,11 +139,19 @@ class BooksHandler {
         message: 'Buku berhasil dihapus',
       };
     } catch (error) {
+      if (error instanceof ClientError) {
+        const response = h.response({
+          status: 'fail',
+          message: error.message,
+        });
+        response.code(error.statusCode);
+        return response;
+      }
       const response = h.response({
-        status: 'fail',
-        message: error.message,
+        status: 'error',
+        message: 'Mohon maaf, terjadi kegagalan pada server kami',
       });
-      response.code(404);
+      response.code(500);
       return response;
     }
   }
