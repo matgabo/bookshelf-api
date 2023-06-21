@@ -1,6 +1,7 @@
 const Hapi = require('@hapi/hapi');
 const books = require('./api/books');
 const BooksService = require('./services/inMemory/BooksService');
+const BooksValidator = require('./validator/books');
 
 const init = async () => {
   const booksService = new BooksService();
@@ -18,6 +19,7 @@ const init = async () => {
     plugin: books,
     options: {
       service: booksService,
+      validator: BooksValidator,
     },
   });
 

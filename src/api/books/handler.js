@@ -1,8 +1,9 @@
 const ClientError = require('../../exceptions/ClientError');
 
 class BooksHandler {
-  constructor(service) {
+  constructor(service, validator) {
     this.service = service;
+    this.validator = validator;
 
     this.postBookHandler = this.postBookHandler.bind(this);
     this.getBooksHandler = this.getBooksHandler.bind(this);
@@ -13,6 +14,7 @@ class BooksHandler {
 
   postBookHandler(request, h) {
     try {
+      this.validator.validateBookPayload(request.payload);
       const {
         name,
         year,
@@ -76,6 +78,7 @@ class BooksHandler {
 
   getBookByIdHandler(request, h) {
     try {
+      this.validator.validateBookPayload(request.payload);
       const { id } = request.params;
       const book = this.service.getBookById(id);
       return {
@@ -104,6 +107,7 @@ class BooksHandler {
 
   putBookByIdHandler(request, h) {
     try {
+      this.validator.validateBookPayload(request.payload);
       const { id } = request.params;
 
       this.service.editBookById(id, request.payload);
