@@ -38,11 +38,11 @@ class BooksService {
     };
 
     if (name === undefined) {
-      throw new InvariantError('Gagal menambahkan buku. Mohon isi nama buku');
+      throw InvariantError;
     }
 
     if (readPage > pageCount) {
-      throw new InvariantError('Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount');
+      throw new InvariantError('readPage tidak boleh lebih besar dari pageCount');
     }
 
     this.books.push(newBook);
@@ -101,17 +101,17 @@ class BooksService {
     },
   ) {
     if (name === undefined) {
-      throw new InvariantError('Gagal memperbarui buku. Mohon isi nama buku');
+      throw InvariantError;
     }
 
     if (readPage > pageCount) {
-      throw new InvariantError('Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount');
+      throw new InvariantError('readPage tidak boleh lebih besar dari pageCount');
     }
 
     const index = this.books.findIndex((book) => book.id === id);
 
     if (index === -1) {
-      throw new NotFoundError('Gagal memperbarui buku. Id tidak ditemukan');
+      throw new NotFoundError('Id tidak ditemukan');
     }
 
     const updatedAt = new Date().toISOString();

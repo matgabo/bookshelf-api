@@ -1,7 +1,11 @@
 const Joi = require('joi');
 
+const customMessages = {
+  'any.required': 'Mohon isi nama buku',
+};
+
 const BookPayloadSchema = Joi.object({
-  name: Joi.string().required(),
+  name: Joi.string().required().messages(customMessages),
   year: Joi.number().integer().min(1900).max(new Date().getFullYear())
     .required(),
   author: Joi.string().required(),

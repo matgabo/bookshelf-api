@@ -52,7 +52,7 @@ class BooksHandler {
       if (error instanceof ClientError) {
         const response = h.response({
           status: 'fail',
-          message: error.message,
+          message: `Gagal menambahkan buku. ${error.message}`,
         });
         response.code(error.statusCode);
         return response;
@@ -120,7 +120,7 @@ class BooksHandler {
       if (error instanceof ClientError) {
         const response = h.response({
           status: 'fail',
-          message: error.message,
+          message: `Gagal memperbarui buku. ${error.message}`,
         });
         response.code(error.statusCode);
         return response;

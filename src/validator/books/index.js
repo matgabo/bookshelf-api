@@ -1,5 +1,3 @@
-// need to rewrite
-
 const InvariantError = require('../../exceptions/InvariantError');
 const { BookPayloadSchema } = require('./schema');
 
